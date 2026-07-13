@@ -9,7 +9,7 @@ import {
 } from "framer-motion";
 
 // Scroll progress is scoped to this wrapper (the "runway" — Hero + Features)
-// rather than the whole document, so the takeoff completes at a consistent
+// rather than the whole document, so the climb completes at a consistent
 // point regardless of how long the rest of the page is.
 export function ScrollAirplane({ children }: { children: ReactNode }) {
   const targetRef = useRef<HTMLDivElement>(null);
@@ -20,56 +20,73 @@ export function ScrollAirplane({ children }: { children: ReactNode }) {
     offset: ["start start", "end end"],
   });
 
-  const rotate = useTransform(scrollYProgress, [0, 1], [10, -55]);
-  const y = useTransform(scrollYProgress, [0, 1], ["0vh", "-85vh"]);
-  const x = useTransform(scrollYProgress, [0, 1], ["0vw", "6vw"]);
-  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+  const y = useTransform(scrollYProgress, [0, 1], ["0vh", "-90vh"]);
+  const rotate = useTransform(scrollYProgress, [0, 1], [0, -12]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [0.9, 0]);
 
   return (
     <div ref={targetRef}>
-      {children}
+      <div className="relative z-10">{children}</div>
 
       {!prefersReducedMotion && (
         <motion.div
           aria-hidden
-          style={{ y, x, opacity }}
-          className="pointer-events-none fixed right-8 top-1/3 z-30 hidden will-change-transform lg:block xl:right-16"
+          style={{ opacity }}
+          className="pointer-events-none fixed inset-0 -z-10 flex items-center justify-center"
         >
           <motion.svg
-            style={{ rotate }}
-            width="72"
-            height="72"
-            viewBox="0 0 100 100"
+            style={{ y, rotate }}
+            width="320"
+            height="320"
+            viewBox="0 0 200 200"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="drop-shadow-[0_0_18px_rgba(124,108,246,0.35)]"
+            className="h-[45vh] w-[45vh] max-h-[420px] max-w-[420px] will-change-transform"
           >
             <defs>
               <linearGradient
-                id="airplane-gradient"
+                id="plane-body-gradient"
                 x1="0"
-                y1="100"
-                x2="100"
+                y1="200"
+                x2="200"
                 y2="0"
               >
                 <stop offset="0%" stopColor="var(--accent-2)" />
                 <stop offset="100%" stopColor="var(--accent)" />
               </linearGradient>
             </defs>
+
+            {/* fuselage */}
             <path
-              d="M92 8 L46 82 L38 56 L12 48 Z"
-              stroke="url(#airplane-gradient)"
-              strokeWidth="3"
-              strokeLinejoin="round"
-              strokeLinecap="round"
+              d="M100 8
+                 C112 8 121 40 121 100
+                 C121 160 112 192 100 192
+                 C88 192 79 160 79 100
+                 C79 40 88 8 100 8 Z"
+              fill="url(#plane-body-gradient)"
             />
+
+            {/* main wing */}
             <path
-              d="M38 56 L58 36"
-              stroke="url(#airplane-gradient)"
-              strokeWidth="3"
-              strokeLinejoin="round"
-              strokeLinecap="round"
+              d="M100 84 L40 140 L58 148 L100 116 L142 148 L160 140 Z"
+              fill="url(#plane-body-gradient)"
+              opacity="0.85"
             />
+
+            {/* tailplane */}
+            <path
+              d="M100 168 L72 190 L84 194 L100 178 L116 194 L128 190 Z"
+              fill="url(#plane-body-gradient)"
+              opacity="0.85"
+            />
+
+            {/* nose cone highlight */}
+            <ellipse cx="100" cy="22" rx="11" ry="16" fill="var(--background)" opacity="0.15" />
+
+            {/* cabin windows */}
+            <circle cx="100" cy="52" r="3.2" fill="var(--background)" opacity="0.6" />
+            <circle cx="100" cy="66" r="3.2" fill="var(--background)" opacity="0.6" />
+            <circle cx="100" cy="80" r="3.2" fill="var(--background)" opacity="0.6" />
           </motion.svg>
         </motion.div>
       )}

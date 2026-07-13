@@ -40,9 +40,13 @@ export function Navbar() {
         <button
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
+          onTouchEnd={(event) => {
+            event.preventDefault();
+            setIsOpen((prev) => !prev);
+          }}
           aria-expanded={isOpen}
           aria-label="Toggle menu"
-          className="flex h-9 w-9 items-center justify-center rounded-md border border-border text-foreground md:hidden"
+          className="relative z-50 flex h-9 w-9 touch-manipulation items-center justify-center rounded-md border border-border pointer-events-auto text-foreground md:hidden"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

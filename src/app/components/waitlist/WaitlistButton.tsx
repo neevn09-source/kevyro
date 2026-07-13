@@ -1,19 +1,22 @@
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
+import { useActionState, useEffect, useState } from "react";
 import {
   buttonBaseStyles,
   buttonVariantStyles,
 } from "@/app/components/ui/Button";
+import { joinWaitlist, type WaitlistFormState } from "@/app/components/waitlist/actions";
+
+const initialState: WaitlistFormState = { status: "idle" };
 
 export function WaitlistButton() {
   const [isOpen, setIsOpen] = useState(false);
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+  const [state, formAction, pending] = useActionState(
+    joinWaitlist,
+    initialState
+  );
 
   function openModal() {
-    setEmail("");
-    setSubmitted(false);
     setIsOpen(true);
   }
 
@@ -37,25 +40,24 @@ export function WaitlistButton() {
     };
   }, [isOpen]);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    console.log("Waitlist signup:", email);
-    setSubmitted(true);
-  }
-
   return (
     <>
       <button
         type="button"
         onClick={openModal}
-        className={`${buttonBaseStyles} ${buttonVariantStyles.secondary}`}
+        onPointerUp={openModal}
+        onTouchEnd={(event) => {
+          event.preventDefault();
+          openModal();
+        }}
+        className={`${buttonBaseStyles} ${buttonVariantStyles.secondary} relative z-50 touch-manipulation pointer-events-auto`}
       >
         Join the Waitlist
       </button>
 
       {isOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto p-4 py-8 sm:items-center"
           role="dialog"
           aria-modal="true"
           aria-labelledby="waitlist-modal-title"
@@ -63,7 +65,7 @@ export function WaitlistButton() {
           <div
             aria-hidden
             onClick={closeModal}
-            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            className="fixed inset-0 bg-black/70 backdrop-blur-sm"
           />
 
           <div className="relative w-full max-w-sm rounded-2xl border border-border bg-surface p-8 shadow-2xl">
@@ -89,7 +91,7 @@ export function WaitlistButton() {
               </svg>
             </button>
 
-            {submitted ? (
+            {state.status === "success" ? (
               <div className="text-center">
                 <p className="text-lg font-medium text-foreground">
                   You&apos;re on the list! 🚀
@@ -110,28 +112,33 @@ export function WaitlistButton() {
                   Get early access to live AI planning.
                 </p>
 
-                <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+                <form action={formAction} className="mt-6 space-y-4">
                   <div>
                     <label htmlFor="waitlist-email" className="sr-only">
                       Email address
                     </label>
                     <input
                       id="waitlist-email"
+                      name="email"
                       type="email"
                       required
                       autoFocus
-                      value={email}
-                      onChange={(event) => setEmail(event.target.value)}
                       placeholder="you@example.com"
-                      className="w-full rounded-lg border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
+                      className="relative z-50 w-full touch-manipulation rounded-lg border border-border bg-background px-4 py-3 text-sm text-foreground pointer-events-auto placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
                     />
+                    {state.status === "error" && (
+                      <p role="alert" className="mt-2 text-sm text-red-400">
+                        {state.message}
+                      </p>
+                    )}
                   </div>
 
                   <button
                     type="submit"
-                    className={`${buttonBaseStyles} ${buttonVariantStyles.primary} w-full`}
+                    disabled={pending}
+                    className={`${buttonBaseStyles} ${buttonVariantStyles.primary} relative z-50 w-full touch-manipulation pointer-events-auto disabled:cursor-not-allowed disabled:opacity-60`}
                   >
-                    Join
+                    {pending ? "Joining…" : "Join"}
                   </button>
                 </form>
               </>

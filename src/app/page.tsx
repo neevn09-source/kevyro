@@ -4,14 +4,17 @@ import { Hero } from "@/app/components/sections/Hero";
 import { Features } from "@/app/components/sections/Features";
 import { Pricing } from "@/app/components/sections/Pricing";
 import { FAQ } from "@/app/components/sections/FAQ";
+import { ScrollAirplane } from "@/app/components/decor/ScrollAirplane";
 
 export default function Home() {
   return (
     <>
       <Navbar />
       <main className="flex-1">
-        <Hero />
-        <Features />
+        <ScrollAirplane>
+          <Hero />
+          <Features />
+        </ScrollAirplane>
         <Pricing />
         <FAQ />
       </main>

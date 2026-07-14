@@ -9,12 +9,11 @@ import { ScrollAirplane } from "@/app/components/ui/ScrollAirplane";
 export default function Home() {
   return (
     <>
+      <ScrollAirplane />
       <Navbar />
       <main className="flex-1">
-        <ScrollAirplane>
-          <Hero />
-          <Features />
-        </ScrollAirplane>
+        <Hero />
+        <Features />
         <Pricing />
         <FAQ />
       </main>

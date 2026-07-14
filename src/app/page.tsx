@@ -4,7 +4,7 @@ import { Hero } from "@/app/components/sections/Hero";
 import { Features } from "@/app/components/sections/Features";
 import { Pricing } from "@/app/components/sections/Pricing";
 import { FAQ } from "@/app/components/sections/FAQ";
-import { ScrollAirplane } from "@/app/components/decor/ScrollAirplane";
+import { ScrollAirplane } from "@/app/components/ui/ScrollAirplane";
 
 export default function Home() {
   return (

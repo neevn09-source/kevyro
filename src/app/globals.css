@@ -26,3 +26,45 @@ body {
   background: var(--background);
   color: var(--foreground);
 }
+
+.pricing-glow {
+  isolation: isolate;
+  overflow: hidden;
+  box-shadow: 0 0 50px -14px var(--accent);
+}
+
+.pricing-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from 0deg,
+    var(--accent),
+    var(--accent-2),
+    var(--accent),
+    var(--accent-2),
+    var(--accent)
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: pricing-glow-spin 6s linear infinite;
+  will-change: transform;
+}
+
+@keyframes pricing-glow-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pricing-glow::before {
+    animation: none;
+  }
+}

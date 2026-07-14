@@ -14,7 +14,7 @@ const faqs: FAQItem[] = [
   {
     question: "Is Kevyro free to use?",
     answer:
-      "Yes. The Free plan includes a limited number of AI itineraries per month. Upgrade to Premium for unlimited planning and more advanced features.",
+      "Yes. The Bronze plan is free and includes a limited number of AI itineraries per month. Upgrade to Silver or Gold for more itineraries, more saved trips, and priority generation.",
   },
   {
     question: "Can I change my itinerary after it's generated?",
@@ -29,7 +29,7 @@ const faqs: FAQItem[] = [
   {
     question: "Do I need a credit card to start?",
     answer:
-      "No. You can start planning on the Free plan without entering any payment details.",
+      "No. You can start planning on the Bronze plan without entering any payment details.",
   },
 ];
 

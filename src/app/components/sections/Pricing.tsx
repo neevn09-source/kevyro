@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Container } from "@/app/components/ui/Container";
 import { PricingCard, type PricingCardProps } from "@/app/components/ui/PricingCard";
 
@@ -63,6 +64,16 @@ export function Pricing() {
             <PricingCard key={plan.tier} {...plan} />
           ))}
         </div>
+
+        <p className="mt-10 text-center text-sm text-muted">
+          Questions about billing or cancellation?{" "}
+          <Link
+            href="/billing-info"
+            className="text-foreground underline decoration-border underline-offset-4 transition-colors hover:decoration-accent"
+          >
+            See how it works
+          </Link>
+        </p>
       </Container>
     </section>
   );

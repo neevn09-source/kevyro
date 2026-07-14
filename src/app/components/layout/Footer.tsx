@@ -5,6 +5,7 @@ const footerLinks = [
   { label: "Features", href: "#features" },
   { label: "Pricing", href: "#pricing" },
   { label: "FAQ", href: "#faq" },
+  { label: "Billing & cancellation", href: "/billing-info" },
 ];
 
 export function Footer() {

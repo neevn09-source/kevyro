@@ -1,17 +1,8 @@
 import { Button } from "@/app/components/ui/Button";
-
-export type PricingCardProps = {
-  tier: string;
-  price: string;
-  period?: string;
-  description: string;
-  features: string[];
-  cta: string;
-  badge?: string;
-  highlighted?: boolean;
-};
+import type { Plan } from "@/lib/plans";
 
 export function PricingCard({
+  id,
   tier,
   price,
   period,
@@ -20,7 +11,7 @@ export function PricingCard({
   cta,
   badge,
   highlighted = false,
-}: PricingCardProps) {
+}: Plan) {
   return (
     <div
       className={`flex h-full flex-col ${highlighted ? "lg:-translate-y-2" : ""}`}
@@ -88,7 +79,7 @@ export function PricingCard({
           </ul>
 
           <Button
-            href="/plan"
+            href={`/checkout/${id}`}
             variant={highlighted ? "primary" : "secondary"}
             className="mt-8 w-full"
           >

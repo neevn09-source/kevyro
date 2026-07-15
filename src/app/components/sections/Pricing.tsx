@@ -1,50 +1,7 @@
 import Link from "next/link";
 import { Container } from "@/app/components/ui/Container";
-import { PricingCard, type PricingCardProps } from "@/app/components/ui/PricingCard";
-
-const plans: PricingCardProps[] = [
-  {
-    tier: "Bronze",
-    price: "$0",
-    period: "/month",
-    description: "For casual trips and first-time planners.",
-    features: [
-      "3 AI-generated itineraries per month",
-      "Basic AI trip planning",
-      "Save a trip permanently for a one-time $7 fee",
-    ],
-    cta: "Start for free",
-  },
-  {
-    tier: "Silver",
-    price: "$10",
-    period: "/month",
-    description: "For travelers who want it planned their way.",
-    features: [
-      "8 AI-generated itineraries per month",
-      "AI plans your trip exactly how you want it",
-      "Save up to 5 trips",
-      "Priority itinerary generation",
-    ],
-    cta: "Upgrade to Silver",
-    badge: "Recommended",
-    highlighted: true,
-  },
-  {
-    tier: "Gold",
-    price: "$100",
-    period: "/year",
-    description: "For frequent travelers who want it all.",
-    features: [
-      "Unlimited AI-generated itineraries",
-      "Unlimited saved trips",
-      "Priority customer support",
-      "Highest priority AI generation",
-    ],
-    cta: "Upgrade to Gold",
-    badge: "Best Value",
-  },
-];
+import { PricingCard } from "@/app/components/ui/PricingCard";
+import { plans } from "@/lib/plans";
 
 export function Pricing() {
   return (
@@ -61,7 +18,7 @@ export function Pricing() {
 
         <div className="mx-auto mt-16 grid max-w-5xl gap-8 lg:grid-cols-3">
           {plans.map((plan) => (
-            <PricingCard key={plan.tier} {...plan} />
+            <PricingCard key={plan.id} {...plan} />
           ))}
         </div>
 

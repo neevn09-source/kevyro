@@ -10,12 +10,25 @@ export const metadata: Metadata = {
     "Tell Kevyro your destination, dates, budget, and preferences, and get a personalized day-by-day itinerary.",
 };
 
-export default function PlanPage() {
+export default async function PlanPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ welcome?: string }>;
+}) {
+  const { welcome } = await searchParams;
+
   return (
     <>
       <Navbar />
       <main className="flex-1 py-24 sm:py-32">
         <Container>
+          {welcome === "bronze" && (
+            <div className="mx-auto mb-10 max-w-2xl rounded-xl border border-accent/30 bg-surface px-5 py-4 text-center text-sm text-foreground">
+              You&apos;re all set — the Bronze plan is now active. Start
+              planning below.
+            </div>
+          )}
+
           <div className="mx-auto max-w-2xl text-center">
             <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
               Plan your trip

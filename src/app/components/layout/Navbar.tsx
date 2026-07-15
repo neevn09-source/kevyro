@@ -33,7 +33,10 @@ export function Navbar() {
           ))}
         </nav>
 
-        <div className="hidden md:block">
+        <div className="hidden items-center gap-3 md:flex">
+          <Button href="/signup" variant="secondary">
+            Sign Up
+          </Button>
           <Button href="/plan">Get started</Button>
         </div>
 
@@ -88,6 +91,13 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
+            <Button
+              href="/signup"
+              variant="secondary"
+              onClick={() => setIsOpen(false)}
+            >
+              Sign Up
+            </Button>
             <Button href="/plan" onClick={() => setIsOpen(false)}>
               Get started
             </Button>
